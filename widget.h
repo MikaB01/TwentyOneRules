@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "config.h"
+
 class Widget : public QWidget
 {
     Q_OBJECT

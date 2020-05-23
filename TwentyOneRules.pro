@@ -19,4 +19,5 @@ SOURCES += main.cpp\
 
 HEADERS  += widget.h \
     controller.h \
-    logic.h
+    logic.h \
+    config.h
