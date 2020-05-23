@@ -13,6 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        widget.cpp
+        widget.cpp \
+    controller.cpp \
+    logic.cpp
 
-HEADERS  += widget.h
+HEADERS  += widget.h \
+    controller.h \
+    logic.h

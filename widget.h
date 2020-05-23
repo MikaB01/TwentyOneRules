@@ -6,10 +6,12 @@
 class Widget : public QWidget
 {
     Q_OBJECT
-
-public:
+private:
     Widget(QWidget *parent = 0);
     ~Widget();
+    static Widget *widget;
+public:
+    static Widget *get();
 };
 
 #endif // WIDGET_H
