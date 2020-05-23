@@ -12,6 +12,10 @@ private:
     Widget(QWidget *parent = 0);
     ~Widget();
     static Widget *widget;
+
+protected:
+    void paintEvent(QPaintEvent *event);
+
 public:
     static Widget *get();
 };

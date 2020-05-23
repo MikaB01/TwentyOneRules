@@ -12,6 +12,13 @@ Widget::~Widget()
 
 }
 
+void Widget::paintEvent(QPaintEvent *event)
+{
+    QPainter *painter = new QPainter(this);
+    painter->setFont(H1);
+    painter->drawText(QRect(0, 20, 450, 30), "True-Count: ", QTextOption(Qt::AlignCenter));
+}
+
 Widget *Widget::get()
 {
     if( !widget )
