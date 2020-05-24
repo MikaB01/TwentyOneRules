@@ -16,5 +16,9 @@ const bool DOUBLE_DOWN_AFTER_SPLIT = true;
 const bool HIT_SPLIT_ACES = false;
 
 const QFont H1("Times", 16, QFont::Bold);
+const QFont H3("Times", 12, QFont::Bold);
+const QFont H5("Times", 8);
+
+const QList<QString> UTF8SYMBOLES = QList<QString>() << "\u2665" << "\u2660" << "\u2666" << "\u2663" ;
 
 #endif // CONFIG_H
