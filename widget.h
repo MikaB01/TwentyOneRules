@@ -14,6 +14,8 @@ private:
     static Widget *widget;
     const int SSM = QApplication::desktop()->screen()->width()/1920;
 
+    void drawControls(QPainter *painter, QBrush brush);
+
 protected:
     void paintEvent(QPaintEvent *event);
 
