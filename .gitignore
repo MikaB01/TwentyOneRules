@@ -3,6 +3,5 @@ Makefile.*
 debug/
 *.user
 *.autosave
-.*
 *.Debug
 *.Release 
