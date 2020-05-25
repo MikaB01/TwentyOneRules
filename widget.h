@@ -12,7 +12,7 @@ private:
     Widget(QWidget *parent = 0);
     ~Widget();
     static Widget *widget;
-    const int SSM = QApplication::desktop()->screen()->width()/1920;
+    double SSM = QApplication::desktop()->screen()->width()/1920;
 
     void drawControls(QPainter *painter, QBrush brush);
 
@@ -21,7 +21,7 @@ protected:
 
 public:
     static Widget *get();
-    int getSSM() const;
+    double getSSM();
 };
 
 #endif // WIDGET_H

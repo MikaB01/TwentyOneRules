@@ -12,7 +12,7 @@ Widget::~Widget()
 
 }
 
-int Widget::getSSM() const
+double Widget::getSSM()
 {
     return SSM;
 }
