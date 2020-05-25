@@ -12,12 +12,14 @@ private:
     Widget(QWidget *parent = 0);
     ~Widget();
     static Widget *widget;
+    const int SSM = QApplication::desktop()->screen()->width()/1920;
 
 protected:
     void paintEvent(QPaintEvent *event);
 
 public:
     static Widget *get();
+    int getSSM() const;
 };
 
 #endif // WIDGET_H

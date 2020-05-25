@@ -12,24 +12,30 @@ Widget::~Widget()
 
 }
 
+int Widget::getSSM() const
+{
+    return SSM;
+}
+
 void Widget::paintEvent(QPaintEvent *event)
 {
     QPainter *painter = new QPainter(this);
     QBrush brush = QBrush(Qt::SolidPattern);
 
     painter->setFont(H1);
-    painter->drawText(QRect(20, 20 , 450, 50), "Count: ", QTextOption());
-    painter->drawText(QRect(20, 70 , 450, 50), "Decks:", QTextOption());
-    painter->drawText(QRect(20, 120, 450, 50), "Bet:", QTextOption());
-    painter->drawLine(20, 205, 430, 205);
-    painter->drawText(QRect(0 , 240, 450, 50), "Recommended move:", QTextOption(Qt::AlignCenter));
-    painter->drawLine(20, 420, 430, 420);
+    painter->drawText(QRect(20*SSM, 20*SSM, 450*SSM, 50*SSM), "Count: ", QTextOption());
+    painter->drawText(QRect(20*SSM, 70*SSM, 450*SSM, 50*SSM), "Decks:", QTextOption());
+    painter->drawText(QRect(20*SSM, 120*SSM, 450*SSM, 50*SSM), "Bet:", QTextOption());
+    painter->drawLine(20*SSM, 205*SSM, 430*SSM, 205*SSM);
+    painter->drawText(QRect(0, 240*SSM, 450*SSM, 50*SSM), "Recommended move:", QTextOption(Qt::AlignCenter));
+    painter->drawLine(20*SSM, 420*SSM, 430*SSM, 420*SSM);
 
     painter->setFont(H3);
-    painter->drawLine(20, 700, 190, 700);
-    painter->drawText(QRect(190 , 684, 70, 30), "Controls", QTextOption(Qt::AlignCenter));
-    painter->drawLine(260, 700, 430, 700);
-    painter->drawText(QRect(0, 698 , 450, 50), "    [0]         [1]   [2]   [3]   [4]   [5]   [6]   [7]   [8]   [9]", QTextOption(Qt::AlignCenter));
+    painter->drawLine(20*SSM, 700*SSM, 190*SSM, 700*SSM);
+    painter->drawText(QRect(190*SSM, 684*SSM, 70*SSM, 30*SSM), "Controls", QTextOption(Qt::AlignCenter));
+    painter->drawLine(260*SSM, 700*SSM, 430*SSM, 700*SSM);
+
+    painter->drawText(QRect(0, 698*SSM, 450*SSM, 50*SSM), "    [0]         [1]   [2]   [3]   [4]   [5]   [6]   [7]   [8]   [9]", QTextOption(Qt::AlignCenter));
 
 
     brush.setColor(Qt::white);
@@ -39,12 +45,12 @@ void Widget::paintEvent(QPaintEvent *event)
         int tmp = 63;
         if( i < 4 ) tmp = i*21;
         painter->setFont(H5);
-        painter->drawRect( 8+i*39-tmp, 740, 24, 40 );
-        painter->drawText( QRect( 8+i*39-tmp, 742, 16, 10 ), "A", QTextOption(Qt::AlignCenter) );
+        painter->drawRect( (8+i*39-tmp)*SSM, 740*SSM, 24*SSM, 40*SSM );
+        painter->drawText( QRect( (8+i*39-tmp)*SSM, 742*SSM, 16*SSM, 10*SSM ), "A", QTextOption(Qt::AlignCenter) );
         painter->rotate(180);
-        painter->drawText(QRect( -(8+i*39-tmp)-26, -740-38, 16, 10 ), "A", QTextOption(Qt::AlignCenter) );
+        painter->drawText(QRect( -((8+i*39-tmp)-26)*SSM, (-740-38)*SSM, 16*SSM, 10*SSM ), "A", QTextOption(Qt::AlignCenter) );
         painter->rotate(-180);
-        painter->drawText( QRect( 8+i*39-tmp, 738, 26, 40 ), UTF8SYMBOLES[1], QTextOption(Qt::AlignCenter) );
+        painter->drawText( QRect( (8+i*39-tmp)*SSM, 738*SSM, 26*SSM, 40*SSM ), UTF8SYMBOLES[1], QTextOption(Qt::AlignCenter) );
     }
 
 }

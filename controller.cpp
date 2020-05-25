@@ -5,9 +5,11 @@ Controller *Controller::controller = nullptr;
 Controller::Controller(QObject *parent)
 {
     widget = Widget::get();
-    widget->setGeometry(1920 - 450, 1080 - 800, 450, 800);
+    widget->setGeometry((1920-450)*widget->getSSM(), (1080-850)*widget->getSSM(), 450*widget->getSSM(), 800*widget->getSSM());
     widget->show();
 }
+
+
 
 Controller::~Controller()
 {
