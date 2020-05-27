@@ -19,9 +19,15 @@ private:
     QFont H4 = QFont("Times", 9+3*SSM);
     QFont H5 = QFont("Times", 6+2*SSM);
 
+    QList<QString> cardhead = QList<QString>() << "2" << "3" << "4" << "5" << "6" << "7" << "8" << "9" << "10" << "B" << "Q" << "K" << "A";
+
     void drawControls(QPainter *painter, QBrush brush);
 
-    void drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize size, int space);
+    void drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize size, int space, int cardBeginning);
+
+    void drawCardsWithValueTen(QPainter *painter, QBrush brush);
+
+    void drawAss(QPainter *painter, QBrush brush);
 
 protected:
     void paintEvent(QPaintEvent *event);
