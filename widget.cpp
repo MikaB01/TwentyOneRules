@@ -14,6 +14,7 @@ Widget::~Widget()
 
 void Widget::drawHistory(QPainter *painter, QBrush brush, QFont font)
 {
+    QPen pen = QPen(Qt::SolidLine);
     painter->setFont(H4);
     brush.setColor(Qt::white);
     painter->setBrush(brush);
@@ -27,6 +28,8 @@ void Widget::drawHistory(QPainter *painter, QBrush brush, QFont font)
     for(int i = 0; i < historyCardStartPointIndex; i++)
         drawSingleCard(painter, QPoint((208+i*25)-(historyCardStartPointIndex-i-1)*25, 314), QSize(34, 57), H5, cardHistory[cardHistory.length()-historyCardStartPointIndex+i]);
 
+    pen.setColor( Qt::white );
+    painter->setPen( pen );
     painter->drawLine(20*SSM, 380*SSM, 430*SSM, 380*SSM);
 }
 
@@ -65,7 +68,10 @@ void Widget::drawAss(QPainter *painter, QBrush brush)
 
 void Widget::drawControls(QPainter *painter, QBrush brush)
 {
+    QPen pen = QPen(Qt::SolidLine);
+    pen.setColor( Qt::white );
     brush.setColor(Qt::white);
+    painter->setPen( pen );
     painter->setBrush(brush);
     painter->setFont(H4);
 
@@ -81,6 +87,8 @@ void Widget::drawControls(QPainter *painter, QBrush brush)
                 painter->drawText(QRect((54+i*39)*SSM, 698*SSM, 40*SSM, 40*SSM), "["+QString::number(i)+"]", QTextOption(Qt::AlignCenter));
 
 
+    pen.setColor( Qt::black );
+    painter->setPen( pen );
     drawCardsWithValueTen(painter, brush);
 
     //Das Ass
@@ -118,6 +126,9 @@ void Widget::drawControls(QPainter *painter, QBrush brush)
 
 void Widget::drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize size, int space, int cardBeginning)
 {
+    QPen pen = QPen(Qt::SolidLine);
+    pen.setColor( Qt::black );
+    painter->setPen( pen );
     painter->setFont(font);
     painter->drawRect( (pos.x()+i*space)*SSM, pos.y()*SSM, size.width()*SSM, size.height()*SSM );
     if(i < 5)
@@ -130,6 +141,9 @@ void Widget::drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize si
 
 void Widget::drawSingleCard(QPainter *painter, QPoint pos, QSize size, QFont font, QString cardhead)
 {
+    QPen pen = QPen(Qt::SolidLine);
+    pen.setColor( Qt::black );
+    painter->setPen( pen );
     painter->setFont(font);
     painter->drawRect( pos.x()*SSM, pos.y()*SSM, size.width()*SSM, size.height()*SSM );
     painter->drawText( QRect( (pos.x()-4)*SSM, (pos.y()-2)*SSM, (size.width()-size.width()/3)*SSM, (size.width()-size.width()/3)*SSM ), cardhead , QTextOption(Qt::AlignCenter) );
@@ -145,9 +159,11 @@ void Widget::paintEvent(QPaintEvent *event)
 
     QPainter *painter = new QPainter(this);
     QBrush brush = QBrush(Qt::SolidPattern);
+    QPen pen = QPen(Qt::SolidLine);
+    pen.setColor( Qt::white );
+    painter->setPen( pen );
 
-    painter->setBrush(Qt::darkGreen);
-    painter->drawRect(0*SSM, 0*SSM, 450*SSM, 800*SSM);
+    painter->drawImage( 0, 0, QImage("images/backgroundv4.png") );
     painter->setBrush(Qt::black);
 
     painter->setFont(H1);
