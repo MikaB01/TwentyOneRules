@@ -134,7 +134,7 @@ void Widget::drawSingleCard(QPainter *painter, QPoint pos, QSize size, QFont fon
     painter->drawRect( pos.x()*SSM, pos.y()*SSM, size.width()*SSM, size.height()*SSM );
     painter->drawText( QRect( (pos.x()-4)*SSM, (pos.y()-2)*SSM, (size.width()-size.width()/3)*SSM, (size.width()-size.width()/3)*SSM ), cardhead , QTextOption(Qt::AlignCenter) );
     painter->rotate(180);
-    painter->drawText(QRect( (-pos.x()-size.width()+4)*SSM, (-(pos.y()+2)-size.height())*SSM, (size.width()-size.width()/1.5)*SSM, (size.width()-size.width()/3)*SSM ), cardhead, QTextOption(Qt::AlignCenter) );
+    painter->drawText(QRect( (-pos.x()-size.width()+4)*SSM, (-(pos.y()-1)-size.height())*SSM, (size.width()-size.width()/3)*SSM, (size.width()-size.width()/3)*SSM ), cardhead, QTextOption(Qt::AlignLeft) );
     painter->rotate(-180);
     painter->drawText( QRect( pos.x()*SSM, (pos.y()-2)*SSM, size.width()*SSM, size.height()*SSM ), UTF8SYMBOLES[1], QTextOption(Qt::AlignCenter) );
 }
