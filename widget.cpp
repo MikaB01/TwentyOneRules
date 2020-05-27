@@ -12,6 +12,24 @@ Widget::~Widget()
 
 }
 
+void Widget::drawHistory(QPainter *painter, QBrush brush, QFont font)
+{
+    painter->setFont(H4);
+    brush.setColor(Qt::white);
+    painter->setBrush(brush);
+    painter->drawLine(20*SSM, 300*SSM, 190*SSM, 300*SSM);
+    painter->drawText(QRect(190*SSM, 284*SSM, 70*SSM, 30*SSM), "History", QTextOption(Qt::AlignCenter));
+    painter->drawLine(260*SSM, 300*SSM, 430*SSM, 300*SSM);
+
+
+    int historyCardStartPointIndex = cardHistory.length();
+    if( historyCardStartPointIndex > 7 ) historyCardStartPointIndex = 7;
+    for(int i = 0; i < historyCardStartPointIndex; i++)
+        drawSingleCard(painter, QPoint((208+i*25)-(historyCardStartPointIndex-i-1)*25, 314), QSize(34, 57), H5, cardHistory[cardHistory.length()-historyCardStartPointIndex+i]);
+
+    painter->drawLine(20*SSM, 380*SSM, 430*SSM, 380*SSM);
+}
+
 double Widget::getSSM()
 {
     return SSM;
@@ -23,7 +41,7 @@ void Widget::drawCardsWithValueTen(QPainter *painter, QBrush brush)
     for(int i = 0; i < 4; i++) {
         int tmp = 63;
         if( i < 4 ) tmp = i*21;
-        painter->setFont(H5);
+        painter->setFont(H6);
         painter->drawRect( (8+i*39-tmp)*SSM, 740*SSM, 24*SSM, 40*SSM );
         painter->drawText( QRect( (8+i*39-tmp)*SSM, 742*SSM, 16*SSM, 10*SSM ), cardhead[i+8], QTextOption(Qt::AlignCenter) );
         painter->rotate(180);
@@ -36,7 +54,7 @@ void Widget::drawCardsWithValueTen(QPainter *painter, QBrush brush)
 
 void Widget::drawAss(QPainter *painter, QBrush brush)
 {
-    painter->setFont(H5);
+    painter->setFont(H6);
     painter->drawRect( (100)*SSM, 740*SSM, 24*SSM, 40*SSM );
     painter->drawText( QRect( (100)*SSM, 742*SSM, 16*SSM, 10*SSM ), cardhead[12], QTextOption(Qt::AlignCenter) );
     painter->rotate(180);
@@ -84,7 +102,7 @@ void Widget::drawControls(QPainter *painter, QBrush brush)
     //Die Zahlen-Karten
     for(int i = 0; i < 8; i++) {
         int tmp = 63;
-        painter->setFont(H5);
+        painter->setFont(H6);
         painter->drawRect( (203+i*39-tmp)*SSM, 740*SSM, 24*SSM, 40*SSM );
         painter->drawText( QRect( (203+i*39-tmp)*SSM, 742*SSM, 16*SSM, 10*SSM ), cardhead[i], QTextOption(Qt::AlignCenter) );
         painter->rotate(180);
@@ -110,6 +128,17 @@ void Widget::drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize si
     painter->drawText( QRect( (pos.x()+i*space)*SSM, (pos.y()-2)*SSM, size.width()*SSM, size.height()*SSM ), UTF8SYMBOLES[1], QTextOption(Qt::AlignCenter) );
 }
 
+void Widget::drawSingleCard(QPainter *painter, QPoint pos, QSize size, QFont font, QString cardhead)
+{
+    painter->setFont(font);
+    painter->drawRect( pos.x()*SSM, pos.y()*SSM, size.width()*SSM, size.height()*SSM );
+    painter->drawText( QRect( (pos.x()-4)*SSM, (pos.y()-2)*SSM, (size.width()-size.width()/3)*SSM, (size.width()-size.width()/3)*SSM ), cardhead , QTextOption(Qt::AlignCenter) );
+    painter->rotate(180);
+    painter->drawText(QRect( (-pos.x()-size.width()+4)*SSM, (-(pos.y()+2)-size.height())*SSM, (size.width()-size.width()/1.5)*SSM, (size.width()-size.width()/3)*SSM ), cardhead, QTextOption(Qt::AlignCenter) );
+    painter->rotate(-180);
+    painter->drawText( QRect( pos.x()*SSM, (pos.y()-2)*SSM, size.width()*SSM, size.height()*SSM ), UTF8SYMBOLES[1], QTextOption(Qt::AlignCenter) );
+}
+
 
 void Widget::paintEvent(QPaintEvent *event)
 {
@@ -128,12 +157,7 @@ void Widget::paintEvent(QPaintEvent *event)
     painter->drawLine(20*SSM, 165*SSM, 430*SSM, 165*SSM);
     painter->drawText(QRect(0, 170*SSM, 450*SSM, 50*SSM), "Recommended move:", QTextOption(Qt::AlignCenter));
 
-    painter->setFont(H4);
-    painter->drawLine(20*SSM, 300*SSM, 190*SSM, 300*SSM);
-    painter->drawText(QRect(190*SSM, 284*SSM, 70*SSM, 30*SSM), "History", QTextOption(Qt::AlignCenter));
-    painter->drawLine(260*SSM, 300*SSM, 430*SSM, 300*SSM);
-
-    painter->drawLine(20*SSM, 380*SSM, 430*SSM, 380*SSM);
+    drawHistory(painter, brush, H4);
 
     brush.setColor(Qt::white);
     painter->setBrush(brush);
@@ -145,8 +169,6 @@ void Widget::paintEvent(QPaintEvent *event)
 
         drawCard( painter, i, H4, QPoint(20, 557), QSize( 48, 80 ), 90, 5+cardSkip);
     }
-
-
 
     drawControls(painter, brush);
 
