@@ -195,6 +195,18 @@ void Widget::paintEvent(QPaintEvent *event)
 
 }
 
+void Widget::keyPressEvent(QKeyEvent *event)
+{
+    for(int i = 0; i < 10; i++)
+        if( event->key() == 48 + i )
+        qDebug() << "Space hitted" << event->key();
+}
+
+void Widget::keyReleaseEvent(QKeyEvent *event)
+{
+
+}
+
 
 Widget *Widget::get()
 {
