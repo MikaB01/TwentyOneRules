@@ -21,3 +21,6 @@ HEADERS  += widget.h \
     controller.h \
     logic.h \
     config.h
+
+DISTFILES += \
+    images/backgroundv4-4k.png

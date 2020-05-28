@@ -14,9 +14,9 @@ private:
     static Widget *widget;
     double SSM = QApplication::desktop()->screen()->width()/1920;
 
-    QFont H1 = QFont("Times", 12+4*SSM, QFont::Bold);
-    QFont H3 = QFont("Times", 9+3*SSM, QFont::Bold);
-    QFont H4 = QFont("Times", 9+3*SSM);
+    QFont H1 = QFont("Times", 13+4*SSM);
+    QFont H3 = QFont("Times", 10+3*SSM);
+    QFont H4 = QFont("Times", 9+3.7*SSM);
     QFont H5 = QFont("Times", 8+2*SSM);
     QFont H6 = QFont("Times", 6+2*SSM);
 

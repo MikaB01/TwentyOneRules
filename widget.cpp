@@ -163,7 +163,12 @@ void Widget::paintEvent(QPaintEvent *event)
     pen.setColor( Qt::white );
     painter->setPen( pen );
 
-    painter->drawImage( 0, 0, QImage("images/backgroundv4.png") );
+    QFile file( "images/backgroundv4-4k.png" );
+    qDebug() << file.exists();
+    brush.setColor(Qt::black);
+    painter->setBrush(brush);
+    painter->drawRect(0, 0, 450*SSM, 800*SSM);
+    painter->drawImage( 0, 0, QImage("images/backgroundv4-true4k.png") );
     painter->setBrush(Qt::black);
 
     painter->setFont(H1);

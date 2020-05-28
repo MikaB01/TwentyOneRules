@@ -5,3 +5,4 @@ debug/
 *.autosave
 *.Debug
 *.Release 
+*.qmake*
