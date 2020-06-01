@@ -32,6 +32,8 @@ private:
     void drawCardsWithValueTen(QPainter *painter, QBrush brush);
     void drawAss(QPainter *painter, QBrush brush);
     void addCardToHistory(int cardValue);
+    void drawBackground(QPainter *painter);
+
 protected:
     void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);

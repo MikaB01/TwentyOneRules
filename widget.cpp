@@ -173,20 +173,35 @@ void Widget::drawSingleCard(QPainter *painter, QPoint pos, QSize size, QFont fon
 }
 
 
+void Widget::drawBackground(QPainter *painter)
+{
+    switch ((int)SSM) {
+    case 1:
+        painter->drawImage( 0, 0, QImage("images/Background_1K.png") );
+        break;
+    case 2:
+        painter->drawImage( 0, 0, QImage("images/Background_2K.png") );
+        break;
+    case 4:
+        painter->drawImage( 0, 0, QImage("images/Background_4K.png") );
+        break;
+    }
+}
+
 void Widget::paintEvent(QPaintEvent *event)
 {
 
     QPainter *painter = new QPainter(this);
     QBrush brush = QBrush(Qt::SolidPattern);
     QPen pen = QPen(Qt::SolidLine);
+
     pen.setColor( Qt::white );
     painter->setPen( pen );
 
     brush.setColor(Qt::black);
     painter->setBrush(brush);
-    painter->drawRect(0, 0, 450*SSM, 800*SSM);
-    painter->drawImage( 0, 0, QImage("images/backgroundv4-true4k.png") );
-    painter->setBrush(Qt::black);
+
+    drawBackground(painter);
 
     painter->setFont(H1);
 
