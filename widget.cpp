@@ -5,6 +5,7 @@ Widget *Widget::widget = nullptr;
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
 {
+    logic = Logic::get();
 }
 
 Widget::~Widget()
@@ -37,7 +38,6 @@ double Widget::getSSM()
 {
     return SSM;
 }
-
 
 void Widget::drawCardsWithValueTen(QPainter *painter, QBrush brush)
 {
@@ -141,6 +141,15 @@ void Widget::drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize si
     painter->setPen( pen );
     painter->setFont(font);
     painter->drawRect( (pos.x()+i*space)*SSM, pos.y()*SSM, size.width()*SSM, size.height()*SSM );
+
+    pen.setColor( Qt::white );
+    painter->setPen(pen);
+    if(!cardBeginning) painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i)), QTextOption(Qt::AlignCenter));
+    else painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i+5)), QTextOption(Qt::AlignCenter));
+
+    pen.setColor( Qt::black );
+    painter->setPen( pen );
+
     if(i < 5)
         painter->drawText( QRect( ((pos.x()-4)+i*space)*SSM, (pos.y()-2)*SSM, (size.width()-size.width()/3)*SSM, (size.width()-size.width()/3)*SSM ), cardhead[i+cardBeginning] , QTextOption(Qt::AlignCenter) );
     painter->rotate(180);
@@ -173,8 +182,6 @@ void Widget::paintEvent(QPaintEvent *event)
     pen.setColor( Qt::white );
     painter->setPen( pen );
 
-    QFile file( "images/backgroundv4-4k.png" );
-    qDebug() << file.exists();
     brush.setColor(Qt::black);
     painter->setBrush(brush);
     painter->drawRect(0, 0, 450*SSM, 800*SSM);
@@ -182,9 +189,18 @@ void Widget::paintEvent(QPaintEvent *event)
     painter->setBrush(Qt::black);
 
     painter->setFont(H1);
+
     painter->drawText(QRect(20*SSM, 20*SSM, 450*SSM, 50*SSM), "Count: ", QTextOption());
+    painter->drawText(QRect(120*SSM, 20*SSM, 260*SSM, 50*SSM), QString::number(logic->getCardCountSum()), QTextOption(Qt::AlignLeft));
+
     painter->drawText(QRect(20*SSM, 70*SSM, 450*SSM, 50*SSM), "Decks:", QTextOption());
+    double deckDouble = logic->getCardCountSum()/52.0;
+    painter->drawText(QRect(120*SSM, 70*SSM, 260*SSM, 50*SSM), QString::number(deckDouble, 'f', 2) + "   (" + QString::number(logic->getCardCountSum()) + ")", QTextOption(Qt::AlignLeft));
+
     painter->drawText(QRect(20*SSM, 120*SSM, 450*SSM, 50*SSM), "Bet:", QTextOption());
+    painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getCardCountSum()), QTextOption(Qt::AlignLeft));
+
+
     painter->drawLine(20*SSM, 165*SSM, 430*SSM, 165*SSM);
     painter->drawText(QRect(0, 170*SSM, 450*SSM, 50*SSM), "Recommended move:", QTextOption(Qt::AlignCenter));
 
@@ -195,7 +211,7 @@ void Widget::paintEvent(QPaintEvent *event)
 
     int cardSkip = 0;
     for(int i = 0; i < 5; i++) {
-        drawCard( painter, i, H4, QPoint(20, 427), QSize( 48, 80 ), 90, 0);
+        drawCard( painter, i, H4, QPoint(20, 427), QSize( 48, 80 ), 90, 0+cardSkip);
         if(i == 4) cardSkip += 3;
 
         drawCard( painter, i, H4, QPoint(20, 557), QSize( 48, 80 ), 90, 5+cardSkip);
@@ -208,8 +224,11 @@ void Widget::paintEvent(QPaintEvent *event)
 void Widget::keyPressEvent(QKeyEvent *event)
 {
     for(int i = 0; i < 10; i++)
-        if( event->key() == 48 + i) // 48 = ASCII 0
+        if( event->key() == Qt::Key_0 + i) {
             addCardToHistory(i);
+            if(i < 2) logic->removeCardFromDeckCountAt(8+i);
+            else logic->removeCardFromDeckCountAt(i);
+        }
     if(event->key() == Qt::Key_Space)
         qDebug() << Qt::Key_Space;
     else if(event->key() == 16777220) // Enter

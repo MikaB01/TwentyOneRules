@@ -4,6 +4,7 @@
 #include <QtWidgets>
 
 #include "config.h"
+#include "logic.h"
 
 class Widget : public QWidget
 {
@@ -12,6 +13,7 @@ private:
     Widget(QWidget *parent = 0);
     ~Widget();
     static Widget *widget;
+    Logic *logic;
     double SSM = QApplication::desktop()->screen()->width()/1920;
 
     QFont H1 = QFont("Times", 13+4*SSM);
