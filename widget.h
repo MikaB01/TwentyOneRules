@@ -21,7 +21,7 @@ private:
     QFont H6 = QFont("Times", 6+2*SSM);
 
     QList<QString> cardhead = QList<QString>() << "2" << "3" << "4" << "5" << "6" << "7" << "8" << "9" << "10" << "B" << "Q" << "K" << "A";
-    QList<QString> cardHistory = QList<QString>() << "A" << "6" << "8" << "10" << "B" << "K" << "A" << "Q" << "2" << "5";
+    QList<QString> cardHistory = QList<QString>();
 
     void drawHistory(QPainter *painter, QBrush brush, QFont font);
     void drawControls(QPainter *painter, QBrush brush);
@@ -29,7 +29,7 @@ private:
     void drawSingleCard(QPainter *painter, QPoint pos, QSize size, QFont font, QString cardhead);
     void drawCardsWithValueTen(QPainter *painter, QBrush brush);
     void drawAss(QPainter *painter, QBrush brush);
-
+    void addCardToHistory(int cardValue);
 protected:
     void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);

@@ -66,6 +66,16 @@ void Widget::drawAss(QPainter *painter, QBrush brush)
     painter->drawText( QRect( (100)*SSM, 738*SSM, 26*SSM, 40*SSM ), UTF8SYMBOLES[1], QTextOption(Qt::AlignCenter) );
 }
 
+void Widget::addCardToHistory(int cardValue)
+{
+    if( cardValue > 1 )
+        cardHistory << cardhead[cardValue-2];
+    else if(cardValue == 0)
+        cardHistory << "10";
+    else if(cardValue == 1)
+        cardHistory << "A";
+}
+
 void Widget::drawControls(QPainter *painter, QBrush brush)
 {
     QPen pen = QPen(Qt::SolidLine);
@@ -197,16 +207,16 @@ void Widget::paintEvent(QPaintEvent *event)
 
 void Widget::keyPressEvent(QKeyEvent *event)
 {
-    qDebug() << event->key();
     for(int i = 0; i < 10; i++)
         if( event->key() == 48 + i) // 48 = ASCII 0
-            qDebug() << "Zahl: " << event->key();
+            addCardToHistory(i);
     if(event->key() == Qt::Key_Space)
         qDebug() << Qt::Key_Space;
     else if(event->key() == 16777220) // Enter
         qDebug() << Qt::Key_Enter;
     else if(event->key() == Qt::Key_Delete)
-        qDebug() << Qt::Key_Delete;
+        cardHistory.pop_back();
+    update();
 }
 
 void Widget::keyReleaseEvent(QKeyEvent *event)
