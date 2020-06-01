@@ -197,9 +197,16 @@ void Widget::paintEvent(QPaintEvent *event)
 
 void Widget::keyPressEvent(QKeyEvent *event)
 {
+    qDebug() << event->key();
     for(int i = 0; i < 10; i++)
-        if( event->key() == 48 + i )
-        qDebug() << "Space hitted" << event->key();
+        if( event->key() == 48 + i) // 48 = ASCII 0
+            qDebug() << "Zahl: " << event->key();
+    if(event->key() == Qt::Key_Space)
+        qDebug() << Qt::Key_Space;
+    else if(event->key() == 16777220) // Enter
+        qDebug() << Qt::Key_Enter;
+    else if(event->key() == Qt::Key_Delete)
+        qDebug() << Qt::Key_Delete;
 }
 
 void Widget::keyReleaseEvent(QKeyEvent *event)
