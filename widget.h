@@ -33,6 +33,7 @@ private:
     void drawAss(QPainter *painter, QBrush brush);
     void addCardToHistory(int cardValue);
     void drawBackground(QPainter *painter);
+    void drawCardBar(QPainter *painter, QPoint pos, int cardCount);
 
 protected:
     void paintEvent(QPaintEvent *event);

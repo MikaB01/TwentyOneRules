@@ -144,8 +144,14 @@ void Widget::drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize si
 
     pen.setColor( Qt::white );
     painter->setPen(pen);
-    if(!cardBeginning) painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i)), QTextOption(Qt::AlignCenter));
-    else painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i+5)), QTextOption(Qt::AlignCenter));
+
+    if(!cardBeginning) {
+        painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i)), QTextOption(Qt::AlignCenter));
+        drawCardBar( painter, QPoint((pos.x()+i*space)*SSM, pos.y()*SSM), logic->getCardCountAt(i) );
+    } else {
+        painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i+5)), QTextOption(Qt::AlignCenter));
+        drawCardBar( painter, QPoint((pos.x()+i*space)*SSM, pos.y()*SSM), logic->getCardCountAt(i+5) );
+    }
 
     pen.setColor( Qt::black );
     painter->setPen( pen );
@@ -186,6 +192,22 @@ void Widget::drawBackground(QPainter *painter)
         painter->drawImage( 0, 0, QImage("images/Background_4K.png") );
         break;
     }
+}
+
+void Widget::drawCardBar(QPainter *painter, QPoint pos, int cardCount)
+{
+    QBrush brush(Qt::SolidPattern);
+    QPen pen(Qt::SolidLine);
+    brush.setColor(Qt::red);
+    pen.setColor(Qt::transparent);
+    painter->setBrush(brush);
+    painter->setPen(pen);
+    painter->drawRect( pos.x()+48, pos.y()+1, 10, 79 );
+    brush.setColor(Qt::green);
+    painter->setBrush(brush);
+    painter->drawRect( pos.x()+48, pos.y()+2+(79.0-79.0*((float)cardCount/(float)logic->getCardCountSum())), 10, 79.0*((float)cardCount/(float)logic->getCardCountSum()) );
+    brush.setColor(Qt::white);
+    painter->setBrush(brush);
 }
 
 void Widget::paintEvent(QPaintEvent *event)
