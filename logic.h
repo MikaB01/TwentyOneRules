@@ -27,6 +27,7 @@ public:
     int getBetMultiplierAt( int index );
 
     void removeCardFromDeckCountAt( int index );
+    void addCardFromDeckCountAt( int index );
 };
 
 #endif // LOGIC_H

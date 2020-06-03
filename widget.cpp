@@ -272,8 +272,14 @@ void Widget::keyPressEvent(QKeyEvent *event)
         qDebug() << Qt::Key_Space;
     else if(event->key() == 16777220) // Enter
         qDebug() << Qt::Key_Enter;
-    else if(event->key() == Qt::Key_Delete)
+    else if(event->key() == Qt::Key_Delete) {
+        if( cardHistory.last() == "A" )
+            logic->addCardFromDeckCountAt(9);
+        else
+            logic->addCardFromDeckCountAt(cardhead.indexOf(cardHistory.last()));
         cardHistory.pop_back();
+    }
+
     update();
 }
 

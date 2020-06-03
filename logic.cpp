@@ -55,3 +55,8 @@ void Logic::removeCardFromDeckCountAt(int index)
 {
     deckCardCounts[index]--;
 }
+
+void Logic::addCardFromDeckCountAt(int index)
+{
+    deckCardCounts[index]++;
+}
