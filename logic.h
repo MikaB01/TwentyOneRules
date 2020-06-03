@@ -15,6 +15,7 @@ private:
 
     QList<int> deckCardCounts = QList<int>() << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS*4 << 4*CARD_DECKS;
     QList<int> deckCardCountsMax = deckCardCounts;
+    QList<int> betMultiplier = QList<int>() << 1 << 2 << 4 << 8 << 10 << 12;
 
 public:
     static Logic *get();
@@ -22,6 +23,8 @@ public:
     int getCardCountAt( int index );
     int getCardCountMaxAt( int index );
     int getCardCountSum();
+    int calcCount();
+    int getBetMultiplierAt( int index );
 
     void removeCardFromDeckCountAt( int index );
 };

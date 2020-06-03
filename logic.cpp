@@ -36,6 +36,21 @@ int Logic::getCardCountSum()
     return cardCountSum;
 }
 
+int Logic::calcCount()
+{
+    int count = 0;
+    for(int i = 0; i < 5; i++)
+        count -= deckCardCounts[i];
+    for(int i = 8; i < 10; i++)
+        count += deckCardCounts[i];
+    return count;
+}
+
+int Logic::getBetMultiplierAt(int index)
+{
+    return betMultiplier[index];
+}
+
 void Logic::removeCardFromDeckCountAt(int index)
 {
     deckCardCounts[index]--;
