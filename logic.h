@@ -14,11 +14,13 @@ private:
     static Logic *logic;
 
     QList<int> deckCardCounts = QList<int>() << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS*4 << 4*CARD_DECKS;
+    QList<int> deckCardCountsMax = deckCardCounts;
 
 public:
     static Logic *get();
 
     int getCardCountAt( int index );
+    int getCardCountMaxAt( int index );
     int getCardCountSum();
 
     void removeCardFromDeckCountAt( int index );

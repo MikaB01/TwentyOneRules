@@ -23,6 +23,11 @@ int Logic::getCardCountAt(int index)
     return deckCardCounts[index];
 }
 
+int Logic::getCardCountMaxAt(int index)
+{
+    return deckCardCountsMax[index];
+}
+
 int Logic::getCardCountSum()
 {
     int cardCountSum = 0;

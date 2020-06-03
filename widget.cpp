@@ -147,10 +147,10 @@ void Widget::drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize si
 
     if(!cardBeginning) {
         painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i)), QTextOption(Qt::AlignCenter));
-        drawCardBar( painter, QPoint((pos.x()+i*space)*SSM, pos.y()*SSM), logic->getCardCountAt(i) );
+        drawCardBar( painter, QPoint((pos.x()+i*space), pos.y()), i );
     } else {
         painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i+5)), QTextOption(Qt::AlignCenter));
-        drawCardBar( painter, QPoint((pos.x()+i*space)*SSM, pos.y()*SSM), logic->getCardCountAt(i+5) );
+        drawCardBar( painter, QPoint((pos.x()+i*space), pos.y()), i+5 );
     }
 
     pen.setColor( Qt::black );
@@ -186,26 +186,24 @@ void Widget::drawBackground(QPainter *painter)
         painter->drawImage( 0, 0, QImage("images/Background_1K.png") );
         break;
     case 2:
-        painter->drawImage( 0, 0, QImage("images/Background_2K.png") );
-        break;
-    case 4:
         painter->drawImage( 0, 0, QImage("images/Background_4K.png") );
+        break;
+    case 3:
+        painter->drawImage( 0, 0, QImage("images/Background_8K.png") );
         break;
     }
 }
 
-void Widget::drawCardBar(QPainter *painter, QPoint pos, int cardCount)
+void Widget::drawCardBar(QPainter *painter, QPoint pos, int i)
 {
     QBrush brush(Qt::SolidPattern);
     QPen pen(Qt::SolidLine);
-    brush.setColor(Qt::red);
+    brush.setColor(QColor(115, 115, 115, 110));
+    if( !((float)logic->getCardCountAt(i)/(float)logic->getCardCountMaxAt(i)) ) brush.setColor(QColor(115, 115, 115, 255));
     pen.setColor(Qt::transparent);
     painter->setBrush(brush);
     painter->setPen(pen);
-    painter->drawRect( pos.x()+48, pos.y()+1, 10, 79 );
-    brush.setColor(Qt::green);
-    painter->setBrush(brush);
-    painter->drawRect( pos.x()+48, pos.y()+2+(79.0-79.0*((float)cardCount/(float)logic->getCardCountSum())), 10, 79.0*((float)cardCount/(float)logic->getCardCountSum()) );
+    painter->drawRect( pos.x()*SSM, pos.y()*SSM, 48*SSM, (80.0*(1-((float)logic->getCardCountAt(i)/(float)logic->getCardCountMaxAt(i))))*SSM );
     brush.setColor(Qt::white);
     painter->setBrush(brush);
 }
@@ -264,7 +262,7 @@ void Widget::keyPressEvent(QKeyEvent *event)
         if( event->key() == Qt::Key_0 + i) {
             addCardToHistory(i);
             if(i < 2) logic->removeCardFromDeckCountAt(8+i);
-            else logic->removeCardFromDeckCountAt(i);
+            else logic->removeCardFromDeckCountAt(i-2);
         }
     if(event->key() == Qt::Key_Space)
         qDebug() << Qt::Key_Space;
