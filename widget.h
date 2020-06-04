@@ -37,6 +37,8 @@ private:
 
     void drawHead(QPainter *painter);
     
+    void hitCard(int i);
+    
 protected:
     void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);

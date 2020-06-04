@@ -269,16 +269,22 @@ void Widget::paintEvent(QPaintEvent *event)
 void Widget::keyPressEvent(QKeyEvent *event)
 {
     for(int i = 0; i < 10; i++)
-        if( event->key() == Qt::Key_0 + i) {
-            addCardToHistory(i);
-            if(i < 2) logic->removeCardFromDeckCountAt(8+i);
-            else logic->removeCardFromDeckCountAt(i-2);
+        if( event->key() == Qt::Key_0 + i){
+            if(i < 2) {
+                logic->removeCardFromDeckCountAt(8+i);
+                if(logic->getCardCountAt(i+8)) addCardToHistory(i);
+            }
+
+            else if(logic->getCardCountAt(i-2)) {
+                    logic->removeCardFromDeckCountAt(i-2);
+                    addCardToHistory(i);
+             }
         }
     if(event->key() == Qt::Key_Space)
         qDebug() << Qt::Key_Space;
     else if(event->key() == 16777220) // Enter
         qDebug() << Qt::Key_Enter;
-    else if(event->key() == Qt::Key_Delete) {
+    else if(event->key() == Qt::Key_Delete && !cardHistory.isEmpty()) {
         if( cardHistory.last() == "A" )
             logic->addCardFromDeckCountAt(9);
         else

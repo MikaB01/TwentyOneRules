@@ -53,10 +53,12 @@ int Logic::getBetMultiplierAt(int index)
 
 void Logic::removeCardFromDeckCountAt(int index)
 {
-    deckCardCounts[index]--;
+    if(deckCardCounts[index])
+        deckCardCounts[index]--;
 }
 
 void Logic::addCardFromDeckCountAt(int index)
 {
-    deckCardCounts[index]++;
+    if(deckCardCounts[index] < deckCardCountsMax[index])
+        deckCardCounts[index]++;
 }
