@@ -221,7 +221,9 @@ void Widget::drawHead(QPainter *painter)
     painter->drawText(QRect(120*SSM, 70*SSM, 260*SSM, 50*SSM), QString::number(deckDouble, 'f', 2) + "   (" + QString::number(logic->getCardCountSum()) + ")", QTextOption(Qt::AlignLeft));
 
     painter->drawText(QRect(20*SSM, 120*SSM, 450*SSM, 50*SSM), "Bet:", QTextOption());
-    if(trueCount < 5)
+    if(trueCount < 0)
+        painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt(0)) + "x", QTextOption(Qt::AlignLeft));
+    else if(trueCount < 5)
         painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt((int)trueCount)) + "x", QTextOption(Qt::AlignLeft));
     else
         painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt(5)) + "x", QTextOption(Qt::AlignLeft));
