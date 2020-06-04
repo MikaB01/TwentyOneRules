@@ -35,6 +35,8 @@ private:
     void drawBackground(QPainter *painter);
     void drawCardBar(QPainter *painter, QPoint pos, int cardCount);
 
+    void drawHead(QPainter *painter);
+    
 protected:
     void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);

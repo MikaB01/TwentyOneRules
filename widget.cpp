@@ -208,6 +208,25 @@ void Widget::drawCardBar(QPainter *painter, QPoint pos, int i)
     painter->setBrush(brush);
 }
 
+void Widget::drawHead(QPainter *painter)
+{
+    painter->setFont(H1);
+
+    painter->drawText(QRect(20*SSM, 20*SSM, 450*SSM, 50*SSM), "Count: ", QTextOption());
+    double trueCount = (double)logic->calcCount()/((double)logic->getCardCountSum()/52.0);
+    painter->drawText(QRect(120*SSM, 20*SSM, 260*SSM, 50*SSM), QString::number(trueCount, 'f', 2) + "   (" + QString::number(logic->calcCount()) + ")", QTextOption(Qt::AlignLeft));
+
+    painter->drawText(QRect(20*SSM, 70*SSM, 450*SSM, 50*SSM), "Decks:", QTextOption());
+    double deckDouble = logic->getCardCountSum()/52.0;
+    painter->drawText(QRect(120*SSM, 70*SSM, 260*SSM, 50*SSM), QString::number(deckDouble, 'f', 2) + "   (" + QString::number(logic->getCardCountSum()) + ")", QTextOption(Qt::AlignLeft));
+
+    painter->drawText(QRect(20*SSM, 120*SSM, 450*SSM, 50*SSM), "Bet:", QTextOption());
+    if(trueCount < 5)
+        painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt((int)trueCount)) + "x", QTextOption(Qt::AlignLeft));
+    else
+        painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt(5)) + "x", QTextOption(Qt::AlignLeft));
+}
+
 void Widget::paintEvent(QPaintEvent *event)
 {
 
@@ -223,22 +242,7 @@ void Widget::paintEvent(QPaintEvent *event)
 
     drawBackground(painter);
 
-    painter->setFont(H1);
-
-    painter->drawText(QRect(20*SSM, 20*SSM, 450*SSM, 50*SSM), "Count: ", QTextOption());
-    double trueCount = (double)logic->calcCount()/(double)CARD_DECKS;
-    painter->drawText(QRect(120*SSM, 20*SSM, 260*SSM, 50*SSM), QString::number(trueCount, 'f', 2) + "   (" + QString::number(logic->calcCount()) + ")", QTextOption(Qt::AlignLeft));
-
-    painter->drawText(QRect(20*SSM, 70*SSM, 450*SSM, 50*SSM), "Decks:", QTextOption());
-    double deckDouble = logic->getCardCountSum()/52.0;
-    painter->drawText(QRect(120*SSM, 70*SSM, 260*SSM, 50*SSM), QString::number(deckDouble, 'f', 2) + "   (" + QString::number(logic->getCardCountSum()) + ")", QTextOption(Qt::AlignLeft));
-
-    painter->drawText(QRect(20*SSM, 120*SSM, 450*SSM, 50*SSM), "Bet:", QTextOption());
-    if(trueCount < 5)
-        painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt((int)trueCount)) + "x", QTextOption(Qt::AlignLeft));
-    else
-        painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt(5)) + "x", QTextOption(Qt::AlignLeft));
-
+    drawHead(painter);
 
     painter->drawLine(20*SSM, 165*SSM, 430*SSM, 165*SSM);
     painter->drawText(QRect(0, 170*SSM, 450*SSM, 50*SSM), "Recommended move:", QTextOption(Qt::AlignCenter));
