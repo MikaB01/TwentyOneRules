@@ -62,3 +62,33 @@ void Logic::addCardFromDeckCountAt(int index)
     if(deckCardCounts[index] < deckCardCountsMax[index])
         deckCardCounts[index]++;
 }
+
+void Logic::addCardToPlayerHand(QString cardHead)
+{
+    playerHand << cardHead;
+    for(int i = 0; i< playerHand.length(); i++)
+        qDebug() << playerHand[i];
+}
+
+void Logic::removeLastCardFromPlayerHand()
+{
+    if( !playerHand.isEmpty() )
+        playerHand.pop_back();
+    for(int i = 0; i< playerHand.length(); i++)
+        qDebug() << playerHand[i];
+}
+
+void Logic::addCardToDealerHand(QString cardHead)
+{
+    dealerHand << cardHead;
+    for(int i = 0; i< dealerHand.length(); i++)
+        qDebug() << dealerHand[i];
+}
+
+void Logic::removeLastCardFromDealerHand()
+{
+    if( !dealerHand.isEmpty() )
+        dealerHand.pop_back();
+    for(int i = 0; i< dealerHand.length(); i++)
+        qDebug() << dealerHand[i];
+}

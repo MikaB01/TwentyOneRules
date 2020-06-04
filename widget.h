@@ -25,6 +25,11 @@ private:
     QList<QString> cardhead = QList<QString>() << "2" << "3" << "4" << "5" << "6" << "7" << "8" << "9" << "10" << "B" << "Q" << "K" << "A";
     QList<QString> cardHistory = QList<QString>();
 
+    QList<int> cardOwnerHistory = QList<int>();
+
+    bool isSpaceActive = false;
+    bool isEnterActive = false;
+
     void drawHistory(QPainter *painter, QBrush brush, QFont font);
     void drawControls(QPainter *painter, QBrush brush);
     void drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize size, int space, int cardBeginning);

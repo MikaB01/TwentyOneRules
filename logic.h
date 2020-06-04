@@ -17,6 +17,9 @@ private:
     QList<int> deckCardCountsMax = deckCardCounts;
     QList<int> betMultiplier = QList<int>() << 1 << 2 << 4 << 8 << 10 << 12;
 
+    QList<QString> playerHand;
+    QList<QString> dealerHand;
+
 public:
     static Logic *get();
 
@@ -28,6 +31,11 @@ public:
 
     void removeCardFromDeckCountAt( int index );
     void addCardFromDeckCountAt( int index );
+
+    void addCardToPlayerHand( QString cardHead );
+    void removeLastCardFromPlayerHand();
+    void addCardToDealerHand( QString cardHead  );
+    void removeLastCardFromDealerHand();
 };
 
 #endif // LOGIC_H

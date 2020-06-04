@@ -269,27 +269,60 @@ void Widget::paintEvent(QPaintEvent *event)
 void Widget::keyPressEvent(QKeyEvent *event)
 {
     for(int i = 0; i < 10; i++)
-        if( event->key() == Qt::Key_0 + i){
+        if( event->key() == Qt::Key_0 + i ) {
             if(i < 2) {
                 logic->removeCardFromDeckCountAt(8+i);
-                if(logic->getCardCountAt(i+8)) addCardToHistory(i);
+                if(logic->getCardCountAt(i+8)) {
+                    addCardToHistory(i);
+                }
+                if(isSpaceActive) {
+                    if( !i ) logic->addCardToPlayerHand(cardhead[8]);
+                    else logic->addCardToPlayerHand(cardhead[12]);
+                    isSpaceActive = false;
+                    cardOwnerHistory << 1;
+                }
+                else if(isEnterActive){
+                    if( !i ) logic->addCardToDealerHand(cardhead[8]);
+                    else logic->addCardToDealerHand(cardhead[12]);
+                    isEnterActive = false;
+                    cardOwnerHistory << 2;
+                } else cardOwnerHistory << 0;
             }
 
             else if(logic->getCardCountAt(i-2)) {
                     logic->removeCardFromDeckCountAt(i-2);
                     addCardToHistory(i);
-             }
+                    if(isSpaceActive) {
+                        logic->addCardToPlayerHand(cardhead[i-2]);
+                        isSpaceActive = false;
+                        cardOwnerHistory << 1;
+                    }
+                    else if(isEnterActive){
+                        logic->addCardToDealerHand(cardhead[i-2]);
+                        isEnterActive = false;
+                        cardOwnerHistory << 2;
+                    } else cardOwnerHistory << 0;
+            }
         }
     if(event->key() == Qt::Key_Space)
-        qDebug() << Qt::Key_Space;
+        isSpaceActive = true;
     else if(event->key() == 16777220) // Enter
-        qDebug() << Qt::Key_Enter;
+        isEnterActive = true;
     else if(event->key() == Qt::Key_Delete && !cardHistory.isEmpty()) {
         if( cardHistory.last() == "A" )
             logic->addCardFromDeckCountAt(9);
         else
             logic->addCardFromDeckCountAt(cardhead.indexOf(cardHistory.last()));
         cardHistory.pop_back();
+        switch (cardOwnerHistory.last()) {
+            case 1:
+                logic->removeLastCardFromPlayerHand();
+                break;
+            case 2:
+                logic->removeLastCardFromDealerHand();
+                break;
+        }
+        if(!cardOwnerHistory.isEmpty()) cardOwnerHistory.pop_back();
     }
 
     update();
@@ -297,7 +330,6 @@ void Widget::keyPressEvent(QKeyEvent *event)
 
 void Widget::keyReleaseEvent(QKeyEvent *event)
 {
-
 }
 
 
