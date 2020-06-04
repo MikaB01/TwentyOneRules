@@ -146,10 +146,10 @@ void Widget::drawCard(QPainter *painter, int i, QFont font, QPoint pos, QSize si
     painter->setPen(pen);
 
     if(!cardBeginning) {
-        painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i)), QTextOption(Qt::AlignCenter));
+        painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(((double)logic->getCardCountAt(i)/(double)logic->getCardCountSum())*100, 'f', 1) + "%", QTextOption(Qt::AlignCenter));
         drawCardBar( painter, QPoint((pos.x()+i*space), pos.y()), i );
     } else {
-        painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(logic->getCardCountAt(i+5)), QTextOption(Qt::AlignCenter));
+        painter->drawText(QRect( (pos.x()+i*space)*SSM, (pos.y()-30)*SSM, size.width()*SSM , 30*SSM ), QString::number(((double)logic->getCardCountAt(i+5)/(double)logic->getCardCountSum())*100, 'f', 1) + "%", QTextOption(Qt::AlignCenter));
         drawCardBar( painter, QPoint((pos.x()+i*space), pos.y()), i+5 );
     }
 
