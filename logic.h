@@ -17,16 +17,56 @@ private:
     QList<int> deckCardCountsMax = deckCardCounts;
     QList<int> betMultiplier = QList<int>() << 1 << 2 << 4 << 8 << 10 << 12;
 
+    QList<QString> heads = QList<QString>() << "2" << "3" << "4" << "5" << "6" << "7" << "8" << "9" << "10" << "A";
+
     QList<QString> playerHand;
     QList<QString> dealerHand;
+
+    int getPlayerHandSum();
 
 public:
     static Logic *get();
 
+    enum action {
+        Stand = 0,
+        Hit = 1,
+        Double = 2,
+        Split = 3
+    };
+
+    QList<action> twentyOneRules = QList<action>() << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Hit    << Double << Double << Double << Double << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Double << Double << Double << Double << Double << Double << Double << Double << Hit    << Hit    <<
+                                                      Double << Double << Double << Double << Double << Double << Double << Double << Hit    << Hit    <<
+                                                      Hit    << Hit    << Stand  << Stand  << Stand  << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Stand  << Stand  << Stand  << Stand  << Stand  << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Stand  << Stand  << Stand  << Stand  << Stand  << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Stand  << Stand  << Stand  << Stand  << Stand  << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Stand  << Stand  << Stand  << Stand  << Stand  << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  <<
+                                                      Hit    << Hit    << Hit    << Hit    << Double << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Hit    << Hit    << Hit    << Double << Double << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Hit    << Hit    << Hit    << Double << Double << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Hit    << Hit    << Double << Double << Double << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Hit    << Double << Double << Double << Double << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Stand  << Double << Double << Double << Double << Stand  << Stand  << Hit    << Hit    << Hit    <<
+                                                      Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  <<
+                                                      Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  <<
+                                                      Split  << Split  << Split  << Split  << Split  << Split  << Hit    << Hit    << Hit    << Hit    <<
+                                                      Split  << Split  << Split  << Split  << Split  << Split  << Hit    << Hit    << Hit    << Hit    <<
+                                                      Hit    << Hit    << Hit    << Split  << Split  << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Double << Double << Double << Double << Double << Double << Double << Double << Hit    << Hit    <<
+                                                      Split  << Split  << Split  << Split  << Split  << Hit    << Hit    << Hit    << Hit    << Hit    <<
+                                                      Split  << Split  << Split  << Split  << Split  << Split  << Hit    << Hit    << Hit    << Hit    <<
+                                                      Split  << Split  << Split  << Split  << Split  << Split  << Split  << Split  << Stand  << Stand  <<
+                                                      Split  << Split  << Split  << Split  << Split  << Stand  << Split  << Split  << Stand  << Stand  <<
+                                                      Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  << Stand  <<
+                                                      Split  << Split  << Split  << Split  << Split  << Split  << Split  << Split  << Split  << Hit    ;
     int getCardCountAt( int index );
     int getCardCountMaxAt( int index );
     int getCardCountSum();
     int calcCount();
+    action calcRecommendedMove(QList<QString> dealerHand, QList<QString> playerHand);
     int getBetMultiplierAt( int index );
 
     void removeCardFromDeckCountAt( int index );
