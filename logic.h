@@ -30,10 +30,12 @@ public:
     static Logic *get();
 
     enum action {
-        Stand  = 0,
-        Hit    = 1,
-        Double = 2,
-        Split  = 3
+        Stand     = 0,
+        Hit       = 1,
+        Double    = 2,
+        Split     = 3,
+        Empty     = 4,
+        Overbuyed = 5
     };
 
     QList<action> twentyOneRules = QList<action>() << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    <<
@@ -78,6 +80,9 @@ public:
     void removeLastCardFromPlayerHand();
     void addCardToDealerHand( QString cardHead  );
     void removeLastCardFromDealerHand();
+
+    void resetDeckCardCounts();
+    void resetCurrentHands();
 };
 
 #endif // LOGIC_H

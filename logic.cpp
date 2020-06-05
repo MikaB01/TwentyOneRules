@@ -71,9 +71,14 @@ int Logic::calcCount()
 
 Logic::action Logic::calcRecommendedMove()
 {
-    if( dealerHand.isEmpty() || playerHand.isEmpty() ) return Hit;
+    if( dealerHand.isEmpty() || playerHand.isEmpty() ) return Empty;
+    qDebug() << playerHand.isEmpty() << "|" << dealerHand.isEmpty();
     int column = heads.indexOf(dealerHand.first());
     int row = 0;
+
+    if( getPlayerHandSum() > 21 ){
+        return Overbuyed;
+    }
 
     for(int i = 0; i <= 13; i++)
         if( getPlayerHandSum() == i+8 ) {
@@ -130,4 +135,15 @@ void Logic::removeLastCardFromDealerHand()
 {
     if( !dealerHand.isEmpty() )
         dealerHand.pop_back();
+}
+
+void Logic::resetDeckCardCounts()
+{
+    deckCardCounts = QList<int>() << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS*4 << 4*CARD_DECKS;
+}
+
+void Logic::resetCurrentHands()
+{
+    playerHand.clear();
+    dealerHand.clear();
 }

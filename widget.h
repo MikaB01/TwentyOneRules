@@ -14,9 +14,14 @@ private:
     ~Widget();
     static Widget *widget;
     Logic *logic;
+
     double SSM = QApplication::desktop()->screen()->width()/1920;
 
-    int currentMove = 1;
+    int currentMove = 4;
+    int backspaceCount = 0;
+
+    bool isSpaceActive = false;
+    bool isEnterActive = false;
 
     QFont H1 = QFont("Times", 22+6*SSM);
     QFont H2 = QFont("Times", 13+4*SSM);
@@ -30,8 +35,6 @@ private:
 
     QList<int> cardOwnerHistory = QList<int>();
 
-    bool isSpaceActive = false;
-    bool isEnterActive = false;
 
     void drawHistory(QPainter *painter, QBrush brush, QFont font);
     void drawControls(QPainter *painter, QBrush brush);
@@ -42,10 +45,11 @@ private:
     void addCardToHistory(int cardValue);
     void drawBackground(QPainter *painter);
     void drawCardBar(QPainter *painter, QPoint pos, int cardCount);
-
     void drawHead(QPainter *painter);
-    
     void hitCard(int i);
+    void setAllCardOwnerToZero();
+    void resetCurrentHands();
+    void reset();
 
     QString getCurrentMoveText();
     void setCurrentMoveColour(QPainter *painter);

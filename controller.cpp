@@ -9,8 +9,6 @@ Controller::Controller(QObject *parent)
     widget->show();
 }
 
-
-
 Controller::~Controller()
 {
 

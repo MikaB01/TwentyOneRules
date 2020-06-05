@@ -241,6 +241,27 @@ void Widget::drawHead(QPainter *painter)
         painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt(5)) + "x", QTextOption(Qt::AlignLeft));
 }
 
+void Widget::setAllCardOwnerToZero()
+{
+    for(int i = 0; i < cardOwnerHistory.length(); i++)
+        cardOwnerHistory[i] = 0;
+}
+
+void Widget::resetCurrentHands()
+{
+    logic->resetCurrentHands();
+    setAllCardOwnerToZero();
+}
+
+void Widget::reset()
+{
+    logic->resetDeckCardCounts();
+    logic->resetCurrentHands();
+    cardHistory.clear();
+    cardOwnerHistory.clear();
+    backspaceCount = 0;
+}
+
 QString Widget::getCurrentMoveText()
 {
     switch (currentMove) {
@@ -255,6 +276,12 @@ QString Widget::getCurrentMoveText()
             break;
         case 3:
         return "Split";
+            break;
+        case 4:
+        return "";
+            break;
+        case 5:
+        return "Overbuyed";
             break;
     }
     return "Hit";
@@ -275,6 +302,9 @@ void Widget::setCurrentMoveColour(QPainter *painter)
             break;
         case 3:
         pen.setColor(QColor(186, 93, 239, 255));
+            break;
+        case 5:
+        pen.setColor(Qt::black);
             break;
     }
     painter->setPen(pen);
@@ -380,6 +410,14 @@ void Widget::keyPressEvent(QKeyEvent *event)
         }
         if(!cardOwnerHistory.isEmpty()) cardOwnerHistory.pop_back();
     }
+    else if(event->key() == Qt::Key_Backspace) {
+        backspaceCount++;
+        if(backspaceCount > 10) reset();
+    }
+    else if(event->key() == Qt::Key_Control) {
+        resetCurrentHands();
+    }
+
     currentMove = logic->calcRecommendedMove();
     update();
 }
