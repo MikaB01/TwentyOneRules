@@ -25,7 +25,7 @@ int Logic::getPlayerHandSum()
 
     for(int i = 0; i < playerHand.length(); i++)
         if( heads.indexOf(playerHand[i]) == 9 )
-            if( sum < 11 && sum+11+assCount*1 < 22) sum += 11;
+            if( sum < 11 && sum+11+assCount*1 <= 22) sum += 11;
             else sum += 1;
 
     return sum;
