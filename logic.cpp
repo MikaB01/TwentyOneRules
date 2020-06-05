@@ -15,6 +15,7 @@ int Logic::getPlayerHandSum()
 {
     int sum = 0;
     int assCount = 0;
+    isPlayerHandSoft = false;
 
     for(int i = 0; i < playerHand.length(); i++)
         if( heads.indexOf(playerHand[i]) == 9 ) assCount++;
@@ -25,8 +26,10 @@ int Logic::getPlayerHandSum()
 
     for(int i = 0; i < playerHand.length(); i++)
         if( heads.indexOf(playerHand[i]) == 9 )
-            if( sum < 11 && sum+11+assCount*1 <= 22) sum += 11;
-            else sum += 1;
+            if( sum < 11 && sum+11+assCount*1 <= 22) {
+                sum += 11;
+                isPlayerHandSoft = true;
+            } else sum += 1;
 
     return sum;
 }
@@ -66,10 +69,28 @@ int Logic::calcCount()
     return count;
 }
 
-Logic::action Logic::calcRecommendedMove(QList<QString> dealerHand, QList<QString> playerHand)
+Logic::action Logic::calcRecommendedMove()
 {
+    if( dealerHand.isEmpty() || playerHand.isEmpty() ) return Hit;
     int column = heads.indexOf(dealerHand.first());
     int row = 0;
+
+    for(int i = 0; i <= 13; i++)
+        if( getPlayerHandSum() == i+8 ) {
+            row = i;
+            if( row > 9 ) row = 9;
+        }
+
+    for(int i = 0; i < 8; i++)
+        if( getPlayerHandSum() == 13+i && isPlayerHandSoft )
+            row = i+10;
+
+    for(int i = 0; i < 10; i++)
+        if(playerHand.length() == 2 && playerHand.at(0) == playerHand.at(1) && heads.indexOf(playerHand.first()) == i )
+            row = i+18;
+
+    qDebug() << "Row: " << row << " Column: " << column << " Index: " << row*10+column;
+    return twentyOneRules[row*10+column];
 }
 
 int Logic::getBetMultiplierAt(int index)
@@ -92,30 +113,21 @@ void Logic::addCardFromDeckCountAt(int index)
 void Logic::addCardToPlayerHand(QString cardHead)
 {
     playerHand << cardHead;
-    for(int i = 0; i< playerHand.length(); i++)
-        qDebug() << playerHand[i];
-    qDebug() << getPlayerHandSum();
 }
 
 void Logic::removeLastCardFromPlayerHand()
 {
     if( !playerHand.isEmpty() )
         playerHand.pop_back();
-    for(int i = 0; i< playerHand.length(); i++)
-        qDebug() << playerHand[i];
 }
 
 void Logic::addCardToDealerHand(QString cardHead)
 {
     dealerHand << cardHead;
-    for(int i = 0; i< dealerHand.length(); i++)
-        qDebug() << dealerHand[i];
 }
 
 void Logic::removeLastCardFromDealerHand()
 {
     if( !dealerHand.isEmpty() )
         dealerHand.pop_back();
-    for(int i = 0; i< dealerHand.length(); i++)
-        qDebug() << dealerHand[i];
 }

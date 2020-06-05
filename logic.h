@@ -13,6 +13,8 @@ private:
     ~Logic();
     static Logic *logic;
 
+    bool isPlayerHandSoft = false;
+
     QList<int> deckCardCounts = QList<int>() << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS << 4*CARD_DECKS*4 << 4*CARD_DECKS;
     QList<int> deckCardCountsMax = deckCardCounts;
     QList<int> betMultiplier = QList<int>() << 1 << 2 << 4 << 8 << 10 << 12;
@@ -22,16 +24,16 @@ private:
     QList<QString> playerHand;
     QList<QString> dealerHand;
 
-    int getPlayerHandSum();
+    int  getPlayerHandSum();
 
 public:
     static Logic *get();
 
     enum action {
-        Stand = 0,
-        Hit = 1,
+        Stand  = 0,
+        Hit    = 1,
         Double = 2,
-        Split = 3
+        Split  = 3
     };
 
     QList<action> twentyOneRules = QList<action>() << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    << Hit    <<
@@ -66,7 +68,7 @@ public:
     int getCardCountMaxAt( int index );
     int getCardCountSum();
     int calcCount();
-    action calcRecommendedMove(QList<QString> dealerHand, QList<QString> playerHand);
+    action calcRecommendedMove();
     int getBetMultiplierAt( int index );
 
     void removeCardFromDeckCountAt( int index );

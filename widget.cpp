@@ -18,7 +18,9 @@ void Widget::drawHistory(QPainter *painter, QBrush brush, QFont font)
     QPen pen = QPen(Qt::SolidLine);
     painter->setFont(H4);
     brush.setColor(Qt::white);
+    pen.setColor(Qt::white);
     painter->setBrush(brush);
+    painter->setPen(pen);
     painter->drawLine(20*SSM, 300*SSM, 190*SSM, 300*SSM);
     painter->drawText(QRect(190*SSM, 284*SSM, 70*SSM, 30*SSM), "History", QTextOption(Qt::AlignCenter));
     painter->drawLine(260*SSM, 300*SSM, 430*SSM, 300*SSM);
@@ -220,7 +222,7 @@ void Widget::drawCardBar(QPainter *painter, QPoint pos, int i)
 
 void Widget::drawHead(QPainter *painter)
 {
-    painter->setFont(H1);
+    painter->setFont(H2);
 
     painter->drawText(QRect(20*SSM, 20*SSM, 450*SSM, 50*SSM), "Count: ", QTextOption());
     double trueCount = (double)logic->calcCount()/((double)logic->getCardCountSum()/52.0);
@@ -237,6 +239,45 @@ void Widget::drawHead(QPainter *painter)
         painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt((int)trueCount)) + "x", QTextOption(Qt::AlignLeft));
     else
         painter->drawText(QRect(120*SSM, 120*SSM, 260*SSM, 50*SSM), QString::number(logic->getBetMultiplierAt(5)) + "x", QTextOption(Qt::AlignLeft));
+}
+
+QString Widget::getCurrentMoveText()
+{
+    switch (currentMove) {
+        case 0:
+        return "Stand";
+            break;
+        case 1:
+        return "Hit";
+            break;
+        case 2:
+        return "Double";
+            break;
+        case 3:
+        return "Split";
+            break;
+    }
+    return "Hit";
+}
+
+void Widget::setCurrentMoveColour(QPainter *painter)
+{
+    QPen pen = QPen(Qt::SolidPattern);
+    switch (currentMove) {
+        case 0:
+        pen.setColor(QColor(232, 89, 23, 255));
+            break;
+        case 1:
+        pen.setColor(QColor(165, 229, 45, 255));
+            break;
+        case 2:
+        pen.setColor(QColor(45, 131, 229, 255));
+            break;
+        case 3:
+        pen.setColor(QColor(186, 93, 239, 255));
+            break;
+    }
+    painter->setPen(pen);
 }
 
 void Widget::paintEvent(QPaintEvent *event)
@@ -258,6 +299,9 @@ void Widget::paintEvent(QPaintEvent *event)
 
     painter->drawLine(20*SSM, 165*SSM, 430*SSM, 165*SSM);
     painter->drawText(QRect(0, 170*SSM, 450*SSM, 50*SSM), "Recommended move:", QTextOption(Qt::AlignCenter));
+    painter->setFont(H1);
+    setCurrentMoveColour(painter);
+    painter->drawText(QRect(0, 220*SSM, 450*SSM, 50*SSM), getCurrentMoveText(), QTextOption(Qt::AlignCenter));
 
     drawHistory(painter, brush, H4);
 
@@ -290,12 +334,14 @@ void Widget::keyPressEvent(QKeyEvent *event)
                     else logic->addCardToPlayerHand(cardhead[12]);
                     isSpaceActive = false;
                     cardOwnerHistory << 1;
+                    currentMove = logic->calcRecommendedMove();
                 }
                 else if(isEnterActive){
                     if( !i ) logic->addCardToDealerHand(cardhead[8]);
                     else logic->addCardToDealerHand(cardhead[12]);
                     isEnterActive = false;
                     cardOwnerHistory << 2;
+                    currentMove = logic->calcRecommendedMove();
                 } else cardOwnerHistory << 0;
             }
 
@@ -316,7 +362,7 @@ void Widget::keyPressEvent(QKeyEvent *event)
         }
     if(event->key() == Qt::Key_Space)
         isSpaceActive = true;
-    else if(event->key() == 16777220) // Enter
+    else if(event->key() == 16777220)// Enter
         isEnterActive = true;
     else if(event->key() == Qt::Key_Delete && !cardHistory.isEmpty()) {
         if( cardHistory.last() == "A" )
@@ -334,7 +380,7 @@ void Widget::keyPressEvent(QKeyEvent *event)
         }
         if(!cardOwnerHistory.isEmpty()) cardOwnerHistory.pop_back();
     }
-
+    currentMove = logic->calcRecommendedMove();
     update();
 }
 

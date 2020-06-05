@@ -16,7 +16,10 @@ private:
     Logic *logic;
     double SSM = QApplication::desktop()->screen()->width()/1920;
 
-    QFont H1 = QFont("Times", 13+4*SSM);
+    int currentMove = 1;
+
+    QFont H1 = QFont("Times", 22+6*SSM);
+    QFont H2 = QFont("Times", 13+4*SSM);
     QFont H3 = QFont("Times", 10+3*SSM);
     QFont H4 = QFont("Times", 9+3.7*SSM);
     QFont H5 = QFont("Times", 8+2*SSM);
@@ -43,6 +46,9 @@ private:
     void drawHead(QPainter *painter);
     
     void hitCard(int i);
+
+    QString getCurrentMoveText();
+    void setCurrentMoveColour(QPainter *painter);
     
 protected:
     void paintEvent(QPaintEvent *event);
