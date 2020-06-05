@@ -27,9 +27,14 @@ void Widget::drawHistory(QPainter *painter, QBrush brush, QFont font)
     int historyCardStartPointIndex = cardHistory.length();
     if( historyCardStartPointIndex > 7 ) historyCardStartPointIndex = 7;
     for(int i = 0; i < historyCardStartPointIndex; i++) {
-        if( cardOwnerHistory[i] == 1 ) brush.setColor(QColor(199, 255, 133, 255));
-        else if( cardOwnerHistory[i] == 2 ) brush.setColor(QColor(196, 207, 255, 255));
-        else brush.setColor(Qt::white);
+        if( historyCardStartPointIndex == 7 )
+            if( cardOwnerHistory[i+cardHistory.length()-7] == 1 ) brush.setColor(QColor(199, 255, 133, 255));
+            else if( cardOwnerHistory[i+cardHistory.length()-7] == 2 ) brush.setColor(QColor(196, 207, 255, 255));
+            else brush.setColor(Qt::white);
+        else
+            if( cardOwnerHistory[i] == 1 ) brush.setColor(QColor(199, 255, 133, 255));
+            else if( cardOwnerHistory[i] == 2 ) brush.setColor(QColor(196, 207, 255, 255));
+            else brush.setColor(Qt::white);
         painter->setBrush(brush);
         drawSingleCard(painter, QPoint((208+i*25)-(historyCardStartPointIndex-i-1)*25, 314), QSize(34, 57), H5, cardHistory[cardHistory.length()-historyCardStartPointIndex+i]);
     }
